@@ -21,19 +21,19 @@ public:
 protected:
     virtual void BeginPlay() override;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    UStaticMeshComponent* WallMesh;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float MoveSpeed = 600.f;
 
-    UPROPERTY(EditDefaultsOnly)
-    UInputMappingContext* InputMappingContext;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    float MoveBound = 450.f;
 
-    UPROPERTY(EditDefaultsOnly)
-    UInputAction* MoveAction;
+    FVector InitialLocation;
 
 public:
     virtual void Tick(float DeltaTime) override;
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-private:
     void Move(const FInputActionValue& Value);
 };
