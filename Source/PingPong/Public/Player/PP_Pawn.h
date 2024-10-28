@@ -6,24 +6,34 @@
 #include "GameFramework/Pawn.h"
 #include "PP_Pawn.generated.h"
 
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+
 UCLASS()
 class PINGPONG_API APP_Pawn : public APawn
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
-	APP_Pawn();
+    APP_Pawn();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+    float MoveSpeed = 600.f;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    UPROPERTY(EditDefaultsOnly)
+    UInputMappingContext* InputMappingContext;
 
+    UPROPERTY(EditDefaultsOnly)
+    UInputAction* MoveAction;
+
+public:
+    virtual void Tick(float DeltaTime) override;
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+private:
+    void Move(const FInputActionValue& Value);
 };
