@@ -7,11 +7,14 @@
 #include "PP_GameMode.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class PINGPONG_API APP_GameMode : public AGameMode
 {
 	GENERATED_BODY()
-	
+
+public:
+	APP_GameMode(const FObjectInitializer& ObjectInitializer);
+
 };
