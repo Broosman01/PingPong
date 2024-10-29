@@ -23,6 +23,7 @@ APP_Ball::APP_Ball()
     ProjectileMovement->Bounciness = 1.f;
     ProjectileMovement->SetIsReplicated(true);
 }
+
 void APP_Ball::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);

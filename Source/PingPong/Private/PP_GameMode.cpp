@@ -8,6 +8,7 @@
 #include "HUD/PP_HUD.h"
 #include "GameFramework/PlayerStart.h"
 #include "EngineUtils.h"
+#include "Ball/PP_Ball.h"
 
 APP_GameMode::APP_GameMode(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -16,6 +17,10 @@ APP_GameMode::APP_GameMode(const FObjectInitializer& ObjectInitializer) : Super(
     PlayerStateClass = APP_PlayerState::StaticClass();
     GameStateClass = APP_GameState::StaticClass();
     HUDClass = APP_HUD::StaticClass();
+
+    bStartPlayersAsSpectators = 0;
+
+    bDelayedStart = true;
 }
 
 AActor* APP_GameMode::FindPlayerStart_Implementation(AController* Player, const FString& IncomingName)
@@ -34,6 +39,46 @@ AActor* APP_GameMode::FindPlayerStart_Implementation(AController* Player, const 
     }
 
     return Super::FindPlayerStart_Implementation(Player, IncomingName);
+}
+
+void APP_GameMode::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
+{
+    if (!bStartPlayersAsSpectators && !MustSpectate(NewPlayer))
+    {
+        RestartPlayer(NewPlayer);
+    }
+
+    if (!ReadyToStartMatch())
+    {
+        NewPlayer->DisableInput(NewPlayer);
+    }
+    else
+    {
+        for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
+        {
+            APlayerController* PlayerController = Iterator->Get();
+            if (PlayerController)
+            {
+                PlayerController->EnableInput(PlayerController);
+            }
+        }
+    }
+}
+
+bool APP_GameMode::ReadyToStartMatch_Implementation()
+{
+    return GetNumPlayers() == 2 || Super::ReadyToStartMatch_Implementation();
+}
+
+void APP_GameMode::HandleMatchHasStarted()
+{
+    Super::HandleMatchHasStarted();
+
+    FRotator BallSpawnRotation = FRotator::ZeroRotator;
+    if (BallClass)
+    {
+        APP_Ball* SpawnedBall = GetWorld()->SpawnActor<APP_Ball>(BallClass, BallSpawnLocation, BallSpawnRotation);
+    }
 }
 
 bool APP_GameMode::IsValidPlayerStart(AActor* Start)
