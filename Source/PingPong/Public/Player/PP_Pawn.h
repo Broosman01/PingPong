@@ -21,6 +21,8 @@ public:
 protected:
     virtual void BeginPlay() override;
 
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
     UStaticMeshComponent* WallMesh;
 
@@ -31,6 +33,9 @@ protected:
     float MoveBound = 450.f;
 
     FVector InitialLocation;
+
+    UFUNCTION(Server, Reliable)
+    void ServerMove(FVector NewLocation);
 
 public:
     virtual void Tick(float DeltaTime) override;
