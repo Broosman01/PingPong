@@ -7,6 +7,7 @@
 #include "PP_HUD.generated.h"
 
 class UPP_WaitingWidget;
+class UPP_ScoreWidget;
 
 UCLASS()
 class PINGPONG_API APP_HUD : public AHUD
@@ -18,4 +19,7 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
     TSubclassOf<UPP_WaitingWidget> WaitingWidgetClass;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    TSubclassOf<UPP_ScoreWidget> ScoreWidgetClass;
 };

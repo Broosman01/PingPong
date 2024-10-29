@@ -47,7 +47,7 @@ protected:
     UFUNCTION(Server, Reliable)
     void ServerMove(FVector NewLocation);
 
-    void SetPawnColor(bool bIsControlledByPlayer);
+    void SetPawnColor(bool IsLocal);
 
 private:
     void DeterminePawnColor();

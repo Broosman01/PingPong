@@ -6,12 +6,10 @@
 #include "GameFramework/PlayerState.h"
 #include "PP_PlayerState.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class PINGPONG_API APP_PlayerState : public APlayerState
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
+public:
 };

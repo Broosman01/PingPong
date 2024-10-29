@@ -12,6 +12,6 @@ class PINGPONG_API UPP_WaitingWidget : public UUserWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintCallable)
+    UFUNCTION()
     void HandleMatchStateChanged(const FName& MatchState);
 };

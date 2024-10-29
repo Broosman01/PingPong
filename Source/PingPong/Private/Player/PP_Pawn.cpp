@@ -6,6 +6,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/SceneComponent.h"
 #include "Net/UnrealNetwork.h"
+#include "GameFramework/PlayerState.h"
 
 APP_Pawn::APP_Pawn()
 {
@@ -32,9 +33,9 @@ void APP_Pawn::DeterminePawnColor()
     SetPawnColor(IsLocallyControlled());
 }
 
-void APP_Pawn::SetPawnColor(bool bIsControlledByPlayer)
+void APP_Pawn::SetPawnColor(bool IsLocal)
 {
-    if (bIsControlledByPlayer && AllyMaterial)
+    if (IsLocal && AllyMaterial)
     {
         WallMesh->SetMaterial(0, AllyMaterial);
     }

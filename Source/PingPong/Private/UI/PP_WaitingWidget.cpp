@@ -6,10 +6,10 @@ void UPP_WaitingWidget::HandleMatchStateChanged(const FName& MatchState)
 {
     if (MatchState == FName(TEXT("InProgress")))
     {
-        RemoveFromParent();
+        SetVisibility(ESlateVisibility::Collapsed);
     }
     else
     {
-        AddToViewport();
+        SetVisibility(ESlateVisibility::Visible);
     }
 }

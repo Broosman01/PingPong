@@ -9,6 +9,7 @@
 #include "GameFramework/PlayerStart.h"
 #include "EngineUtils.h"
 #include "Ball/PP_Ball.h"
+#include "GameFramework/PlayerState.h"
 
 APP_GameMode::APP_GameMode(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -43,6 +44,12 @@ AActor* APP_GameMode::FindPlayerStart_Implementation(AController* Player, const 
 
 void APP_GameMode::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
+    APP_PlayerState* PlayerState = NewPlayer->GetPlayerState<APP_PlayerState>();
+    if (PlayerState)
+    {
+        PlayerState->SetPlayerId(GetNumPlayers());
+    }
+
     if (!bStartPlayersAsSpectators && !MustSpectate(NewPlayer))
     {
         RestartPlayer(NewPlayer);
