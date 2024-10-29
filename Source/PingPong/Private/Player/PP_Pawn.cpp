@@ -24,6 +24,24 @@ void APP_Pawn::BeginPlay()
     Super::BeginPlay();
 
     InitialLocation = GetActorLocation();
+    DeterminePawnColor();
+}
+
+void APP_Pawn::DeterminePawnColor()
+{
+    SetPawnColor(IsLocallyControlled());
+}
+
+void APP_Pawn::SetPawnColor(bool bIsControlledByPlayer)
+{
+    if (bIsControlledByPlayer && AllyMaterial)
+    {
+        WallMesh->SetMaterial(0, AllyMaterial);
+    }
+    else if (EnemyMaterial)
+    {
+        WallMesh->SetMaterial(0, EnemyMaterial);
+    }
 }
 
 void APP_Pawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

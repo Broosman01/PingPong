@@ -18,6 +18,10 @@ class PINGPONG_API APP_Pawn : public APawn
 public:
     APP_Pawn();
 
+    virtual void Tick(float DeltaTime) override;
+
+    void Move(const FInputActionValue& Value);
+
 protected:
     virtual void BeginPlay() override;
 
@@ -25,6 +29,12 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
     UStaticMeshComponent* WallMesh;
+
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    UMaterialInterface* AllyMaterial;
+
+    UPROPERTY(EditAnywhere, Category = "Materials")
+    UMaterialInterface* EnemyMaterial;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     float MoveSpeed = 600.f;
@@ -37,8 +47,8 @@ protected:
     UFUNCTION(Server, Reliable)
     void ServerMove(FVector NewLocation);
 
-public:
-    virtual void Tick(float DeltaTime) override;
+    void SetPawnColor(bool bIsControlledByPlayer);
 
-    void Move(const FInputActionValue& Value);
+private:
+    void DeterminePawnColor();
 };
