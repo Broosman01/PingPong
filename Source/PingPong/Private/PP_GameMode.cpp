@@ -25,7 +25,6 @@ AActor* APP_GameMode::FindPlayerStart_Implementation(AController* Player, const 
     {
         for (TActorIterator<APlayerStart> It(World); It; ++It)
         {
-            const FName IncomingPlayerStartTag = FName(*IncomingName);
             APlayerStart* Start = *It;
             if (IsValidPlayerStart(Start))
             {
@@ -39,12 +38,18 @@ AActor* APP_GameMode::FindPlayerStart_Implementation(AController* Player, const 
 
 bool APP_GameMode::IsValidPlayerStart(AActor* Start)
 {
+    const float Tolerance = 1.0f;
+
     for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
     {
-        APlayerController* PlayerActor = Iterator->Get();
-        if (PlayerActor && PlayerActor->GetPawn() && PlayerActor->GetPawn()->GetActorLocation() == Start->GetActorLocation())
+        APlayerController* PlayerController = Iterator->Get();
+        if (PlayerController && PlayerController->GetPawn())
         {
-            return false;
+            APawn* PlayerPawn = PlayerController->GetPawn();
+            if (FVector::Dist(PlayerPawn->GetActorLocation(), Start->GetActorLocation()) <= Tolerance)
+            {
+                return false;
+            }
         }
     }
     return true;
