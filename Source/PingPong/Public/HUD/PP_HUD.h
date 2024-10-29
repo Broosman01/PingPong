@@ -6,12 +6,16 @@
 #include "GameFramework/HUD.h"
 #include "PP_HUD.generated.h"
 
-/**
- * 
- */
+class UPP_WaitingWidget;
+
 UCLASS()
 class PINGPONG_API APP_HUD : public AHUD
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
+protected:
+    virtual void BeginPlay() override;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    TSubclassOf<UPP_WaitingWidget> WaitingWidgetClass;
 };
