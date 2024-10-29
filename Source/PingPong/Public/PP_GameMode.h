@@ -17,4 +17,7 @@ class PINGPONG_API APP_GameMode : public AGameMode
 public:
 	APP_GameMode(const FObjectInitializer& ObjectInitializer);
 
+	virtual AActor* FindPlayerStart_Implementation(AController* Player, const FString& IncomingName = TEXT("")) override;
+
+	bool IsValidPlayerStart(AActor* Start);
 };
